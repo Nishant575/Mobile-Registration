@@ -11,6 +11,17 @@ wind.title("Mobile Registration")
 nm = StringVar()
 mbn = StringVar()
 
+def validation():
+    name = nm.get()
+    number = mbn.get()
+
+    if name == "" or number == "":
+        return True
+    elif len(number) != 10:
+        return True
+    else:
+        return False
+
 # --Function to insert data in text file--
 def insert():
 
@@ -18,11 +29,8 @@ def insert():
     name = nm.get()
     number = mbn.get()
 
-    if name == "" or number == "":
-        messagebox.showerror("Error", "Please enter info")
-    elif len(number) != 10:
-        messagebox.showerror("Error", "Invalid Mobile Number")
-        inp_mbn.delete(0, 'end')
+    if validation():
+        messagebox.showerror("Error", "Please enter valid info")
     else:
         data_file = open("data.txt",'a') #creates file if not present
         data_file.close()
@@ -45,13 +53,39 @@ def insert():
             data_file.close()
 
 # --Function to display data if present--
-def check():
+def display_data():
     disp_data.delete("1.0","end")
     data_file = open("data.txt","r")
     for val in data_file.readlines():
         disp_data.insert(tk.END,val+"\n")
     if len(disp_data.get("1.0", "end-1c")) == 0:
         messagebox.showerror("Data not found", "No data to show")
+
+def check():
+    disp_data.delete("1.0","end")
+    k = 0
+    data_file = open("data.txt","r")
+    name = nm.get()
+    number = mbn.get()
+    if name == "" and number == "":
+        messagebox.showerror("Error", "Please enter atleast one field")
+    elif name == "":
+        for val in data_file.readlines():
+            if number in val:
+                disp_data.insert(tk.END,val+"\n")
+                k = 1
+                break
+        if k == 0:
+            messagebox.showerror("Error", "Record not found")
+
+    else:
+        for val in data_file.readlines():
+            if name in val:
+                disp_data.insert(tk.END,val+"\n")
+                k = 1
+        if k == 0:
+            messagebox.showerror("Error", "Record not found")
+    data_file.close()
 
 
 # --Function to clear all text fields--
@@ -92,6 +126,8 @@ inp_mbn.place(x=210,y=80)
 btn_insert = Button(f1,text="Insert",width=10, command=insert)
 btn_insert.place(x=200,y=130)
 
+btn_check = Button(f1,text="Check",width=10, command=check)
+btn_check.place(x=300,y=130)
 # --Print Frame---
 f2 = Frame(wind,width = 600,height=400,relief=SUNKEN)
 f2.place(x=50,y=380)
@@ -102,13 +138,13 @@ lbl_vinf.place(x=0,y=0)
 disp_data = Text(f2,font=( 'aria' ,16, ), width=59, height=13,bg='AliceBlue')
 disp_data.place(x=0,y=40)
 
-btn_Check = Button(f2,text="Check",width=10,command=check)
-btn_Check.place(x=350,y=360)
+btn_disp = Button(f2,text="Display",width=10,command=display_data)
+btn_disp.place(x=350,y=360)
 
 btn_Clear = Button(f2,text="Clear",width=10,command=clear)
 btn_Clear.place(x=480,y=360)
 
-btn_Check = Button(f2,text="Exit",width=10,bg="red",command=close)
-btn_Check.place(x=200,y=360)
+btn_Close = Button(f2,text="Exit",width=10,bg="red",command=close)
+btn_Close.place(x=200,y=360)
 
 wind.mainloop()
