@@ -14,17 +14,17 @@ mbn = StringVar()
 # --Function to insert data in text file--
 def insert():
 
-    k = 0
+    k = 0    # flag variable to check if number already exists
     name = nm.get()
     number = mbn.get()
 
     if name == "" or number == "":
         messagebox.showerror("Error", "Please enter info")
-    elif len(number) > 10:
+    elif len(number) != 10:
         messagebox.showerror("Error", "Invalid Mobile Number")
         inp_mbn.delete(0, 'end')
     else:
-        data_file = open("data.txt",'a')
+        data_file = open("data.txt",'a') #creates file if not present
         data_file.close()
         data_file = open("data.txt",'r')
         for val in data_file.readlines():
