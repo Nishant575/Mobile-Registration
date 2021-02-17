@@ -61,6 +61,7 @@ def display_data():
     if len(disp_data.get("1.0", "end-1c")) == 0:
         messagebox.showerror("Data not found", "No data to show")
 
+# --Function to check if entered data exists--
 def check():
     disp_data.delete("1.0","end")
     k = 0
