@@ -24,7 +24,9 @@ def insert():
         messagebox.showerror("Error", "Invalid Mobile Number")
         inp_mbn.delete(0, 'end')
     else:
-        data_file = open("data.txt","r")
+        data_file = open("data.txt",'a')
+        data_file.close()
+        data_file = open("data.txt",'r')
         for val in data_file.readlines():
             if number in val:
                 k = 1
@@ -49,7 +51,7 @@ def check():
     for val in data_file.readlines():
         disp_data.insert(tk.END,val+"\n")
     if len(disp_data.get("1.0", "end-1c")) == 0:
-        messagebox.showerror("Data not found", "No data to show")    
+        messagebox.showerror("Data not found", "No data to show")
 
 
 # --Function to clear all text fields--
