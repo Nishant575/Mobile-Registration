@@ -72,7 +72,7 @@ def check():
         messagebox.showerror("Error", "Please enter atleast one field")
     elif name == "":
         for val in data_file.readlines():
-            if number in val:
+            if number in val.split():
                 disp_data.insert(tk.END,val+"\n")
                 k = 1
                 break
@@ -81,7 +81,7 @@ def check():
 
     else:
         for val in data_file.readlines():
-            if name in val:
+            if name in val.split():
                 disp_data.insert(tk.END,val+"\n")
                 k = 1
         if k == 0:
