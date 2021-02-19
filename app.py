@@ -45,7 +45,7 @@ def insert():
             inp_mbn.delete(0, 'end')
         else:
             data_file = open("data.txt","a")
-            str = name +" "+ "--->"+ " " + number + "\n"
+            str = name + "  --->  "+ number + "\n"
             data_file.write(str)
             inp_mbn.delete(0, 'end')
             inp_name.delete(0, 'end')
@@ -69,23 +69,26 @@ def check():
     name = nm.get()
     number = mbn.get()
     if name == "" and number == "":
-        messagebox.showerror("Error", "Please enter atleast one field")
-    elif name == "":
+        messagebox.showerror("Error", "Please enter valid info")
+    elif number == "":
         for val in data_file.readlines():
-            if number in val.split():
+            if name in val.split("  "):
                 disp_data.insert(tk.END,val+"\n")
                 k = 1
-                break
         if k == 0:
             messagebox.showerror("Error", "Record not found")
 
-    else:
+    elif len(number) == 10:
         for val in data_file.readlines():
-            if name in val.split():
+            if number in val:
                 disp_data.insert(tk.END,val+"\n")
                 k = 1
+                break
+
         if k == 0:
             messagebox.showerror("Error", "Record not found")
+    else :
+        messagebox.showerror("Error", "Please enter valid info")         
     data_file.close()
 
 
